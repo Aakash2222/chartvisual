@@ -1,0 +1,72 @@
+{% extends "partials/base.html" %}
+{% block content %}
+
+<hr>
+
+{% comment %} <div class="container"> {% endcomment %}
+<div style="background-color:pink">
+<h3>Filter Data From DataBase</h3>
+<div class='navbar navbar-expand-lg  navbar-dark  px-5 filter-bar' style="background-color:pink">
+    {% comment %} <form action="\Filter-page" method="POST"> {% endcomment %}
+    <form action="{% url 'filter-page' %}" method="POST">
+        {% csrf_token %}
+        <label for="end_year">End Year</label>
+        <input type="text" id="end_year" name="end_year" value="{{end_year}}"/>
+
+        <label for="topic">Topic</label>
+        <input type="text" id="topic" name="topic" value="{{topic}}"/>
+
+        <label for="sector">Sector</label>
+        <input type="text" id="sector" name="sector" value="{{sector}}">
+
+        <label for="region">Region</label>
+        <input type="text" id="region" name="region"value="{{region}}">
+
+        <label for="source">Source</label>
+        <input type="text" id="source" name="source" value="{{source}}">
+        
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" value="{{country}}">
+
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+</div>
+</div>
+<br><br><br><br><hr><hr>
+<div class="table-container px-5" style="background-color:grey">
+    <table class="table-striped table"  style="background-color:grey">
+
+        <thead>
+          <tr>
+            <th scope="col">End_year</th>
+            <th scope="col">Topic</th>
+            <th scope="col">Sector</th>
+            <th scope="col">Region</th>
+            <th scope="col">Source</th>
+            <th scope="col">Country</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for prod in products %}
+          <tr>
+            <td>{{prod.end_year}}</td>
+            <td>{{prod.topic}}</td>
+            <td>{{prod.sector}}</td>
+            <td>{{prod.region}}</td>
+            <td>{{prod.source}}</td>
+            <td>{{prod.country}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+<script> 
+  if(window.history.replaceState) {
+    window.history.replaceState(
+      null,null,window.location.href
+    )
+  }
+</script>
+
+{% endblock %}
