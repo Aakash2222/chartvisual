@@ -1,39 +1,43 @@
 {% extends "partials/base.html" %}
 {% block content %}
 
-<hr>
 
 {% comment %} <div class="container"> {% endcomment %}
 <div style="background-color:pink">
-<h3>Filter Data From DataBase</h3>
-<div class='navbar navbar-expand-lg  navbar-dark  px-5 filter-bar' style="background-color:pink">
+  <div>
+  <div><h3>Filter Data From DataBase</h3></div>
+  <div><h3>ADD New Details</h3></div>
+  </div>
+  
+<hr>
+<div class='navbar navbar-expand-lg  navbar-dark  px-5 py-5 filter-bar' style="">
     {% comment %} <form action="\Filter-page" method="POST"> {% endcomment %}
     <form action="{% url 'filter-page' %}" method="POST">
         {% csrf_token %}
-        <label for="end_year">End Year</label>
+        <label for="end_year"><b>End Year</b></label>
         <input type="text" id="end_year" name="end_year" value="{{end_year}}"/>
 
-        <label for="topic">Topic</label>
+        <label for="topic"><b>Topic</b></label>
         <input type="text" id="topic" name="topic" value="{{topic}}"/>
 
-        <label for="sector">Sector</label>
+        <label for="sector"><b>Sector</b></label>
         <input type="text" id="sector" name="sector" value="{{sector}}">
 
-        <label for="region">Region</label>
+        <label for="region"><b>Region</b></label>
         <input type="text" id="region" name="region"value="{{region}}">
 
-        <label for="source">Source</label>
+        <label for="source"><b>Source</b></label>
         <input type="text" id="source" name="source" value="{{source}}">
         
-        <label for="country">Country</label>
+        <label for="country"><b>Country</b></label>
         <input type="text" id="country" name="country" value="{{country}}">
 
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
 </div>
 </div>
-<br><br><br><br><hr><hr>
-<div class="table-container px-5" style="background-color:grey">
+
+<div class="table-container px-5 py-5" style="background-color:grey">
     <table class="table-striped table"  style="background-color:grey">
 
         <thead>

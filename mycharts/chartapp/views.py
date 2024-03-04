@@ -10,11 +10,26 @@ from django.http.response import HttpResponse
 from django.http import JsonResponse
 from rest_framework.response import Response
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 # Create your views here.
+
 def index(request):
     products = Product.objects.all()
 
+    paginator = Paginator(products, 6)
+
+    page = request.GET.get('page')
+
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        products = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        products = paginator.page(paginator.num_pages)
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
@@ -26,6 +41,24 @@ def index(request):
         "form": form,
     }
     return render(request, 'chartapp/index.html',context)
+        
+
+
+
+# def index(request):
+#     products = Product.objects.all()
+
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = ProductForm()
+#     context= {
+#         "products": products,
+#         "form": form,
+#     }
+#     return render(request, 'chartapp/index.html',context)
 
 def signup(request):
     if request.method == "POST":
@@ -42,7 +75,7 @@ def signup(request):
     context = {
         'form':form,
     }
-    return render(request, 'chartapp/signup.html',context) 
+    return render(request, 'chartapp/signup.html',context)
 
 def login(request):
     return render(request, 'chartapp/login.html' )
@@ -119,11 +152,7 @@ def filter(request):
         region = request.POST['region']
         source = request.POST['source']
         country = request.POST['country']
-
-        print(end_year,topic,sector,region,source,country)
-        
-
-    
+        # print(end_year,topic,sector,region,source,country)
         if end_year and topic and sector and region and source and country:
             products = Product.objects.filter(Q(end_year__contains=end_year) & Q(topic__contains=topic) & Q(sector__contains=sector) & Q(region__contains=region) & Q(source__contains=source) & Q(country__contains=country))
         elif end_year and topic and sector and region and source:
@@ -136,25 +165,7 @@ def filter(request):
             products = Product.objects.filter(Q(end_year__contains=end_year) & Q(topic__contains=topic))
         elif end_year:
             products = Product.objects.filter(end_year__contains=end_year)
-
-        elif end_year and topic and sector and region and source and country:
-            products = Product.objects.filter(Q(end_year__contains=end_year) & Q(topic__contains=topic) & Q(sector__contains=sector) & Q(region__contains=region) & Q(source__contains=source) & Q(country__contains=country))
-        
-        
-
-        # elif end_year and topic:
-        #     products = Product.objects.filter(Q(end_year__contains=end_year) & Q(topic__contains=topic))
-
-        # elif end_year:
-        #     products = Product.objects.filter(end_year__contains=end_year)
-
-
-
-    
-        
-
     context ={
-            # filtered_student,
         'products': products,
     }
     return render(request, 'chartapp/filterpage.html', context)
