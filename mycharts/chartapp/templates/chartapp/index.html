@@ -3,7 +3,10 @@
 
 <div class="main-container">
 
-<div><h1>Django Chart Project</h1></div>
+<div class='mini-bar'>
+  <h1>Django Chart Project</h1>
+  <button class="btn btn-outline-success"><a href='{% url 'add_data' %}'>ADD New Data</a></button>
+</div>
 <hr>
     
 <div class="row"> 
@@ -11,7 +14,7 @@
     <div class="card">
       <div class="card-body">
         
-        <h5 class="card-title">Sales Overview</h5>
+        <h5 class="card-title">Intensity vs. Sector Statistics</h5>
 
         <div class="chart-container">
           {% include 'partials/chart1.html' %}
@@ -23,23 +26,26 @@
   <div class="col-md-4">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">User Statistics</h5>
+
+        <h5 class="card-title">Topic Vs Likelihood Statistics</h5>
         <div class="chart-container">
           somethings
           {% include 'partials/chart2.html' %}
         </div>
-        {% comment %} <p class="card-text">Analyze user behavior and engagement.</p> {% endcomment %}
+
       </div>
     </div>
   </div>
   <div class="col-md-4">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Product Performance</h5>
+        <h5 class="card-title">something Vs something Statistics</h5>
         <div class="chart-container">
-          <!-- Your product performance chart goes here -->
+          somethings
+          {% include 'partials/chart3.html' %}
         </div>
-        {% comment %} <p class="card-text">Track the performance of your products.</p> {% endcomment %}
+
+
       </div>
     </div>
   </div>
@@ -52,8 +58,8 @@
   <div class="row px-2">
       
     <div class="col-md-4 border px-2">
-      <h3>Add new data to chart</h3><hr>
-      <form action="" method="POST">
+      <h3 style="color:white;">Add new data to chart</h3><hr>
+      <form action="" method="POST" style="color:white;">
         {% csrf_token %}
         {{form}}
         <br>

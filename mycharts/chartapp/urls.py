@@ -8,6 +8,7 @@ urlpatterns = [
      path('save_json', views.save_json, name='save_json'),
      path('search/', views.search, name='search'),
      path('filter-page/', views.filter, name='filter-page'),
+     path('add_data/', views.add_data, name='add_data'),
 
 ]
  

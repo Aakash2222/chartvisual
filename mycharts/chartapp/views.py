@@ -15,41 +15,32 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
+from django.http import JsonResponse
+
 def index(request):
     products = Product.objects.all()
 
-    paginator = Paginator(products, 6)
+    paginator = Paginator(products,8)
+    page = request.POST.get('page')
+    paged_products = paginator.get_page(page)
 
-    page = request.GET.get('page')
-
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        products = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        products = paginator.page(paginator.num_pages)
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST) 
         if form.is_valid():
             form.save()
     else:
         form = ProductForm()
     context= {
-        "products": products,
+        "products":paged_products,
         "form": form,
     }
     return render(request, 'chartapp/index.html',context)
-        
-
 
 
 # def index(request):
 #     products = Product.objects.all()
-
 #     if request.method == 'POST':
-#         form = ProductForm(request.POST)
+#         form = ProductForm(request.POST) 
 #         if form.is_valid():
 #             form.save()
 #     else:
@@ -169,4 +160,17 @@ def filter(request):
         'products': products,
     }
     return render(request, 'chartapp/filterpage.html', context)
+
+def add_data(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST) 
+        if form.is_valid():
+            form.save()
+    else:
+        form = ProductForm()
+
+    content = {
+        'form':form,
+    }
+    return render(request, 'chartapp/add_data.html',content)
     

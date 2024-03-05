@@ -1,0 +1,16 @@
+{% extends "partials/base.html" %}
+{% block content %}
+
+
+
+<h1 style="color:pink;">Add Data Page</h1>
+<hr>
+
+<form action="" method="POST" style="color:white;">
+    {% csrf_token %}
+    {{form}}
+    <br>
+    <input class="btn btn-outline-success center" type="submit" value="Add Data">
+  </form>
+
+{% endblock %}
