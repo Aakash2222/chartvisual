@@ -11,6 +11,8 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.hashers import check_password
+from django.contrib import messages
 
 
 # Create your views here.
@@ -54,13 +56,19 @@ def index(request):
 def signup(request):
     if request.method == "POST":
         form    = SignupForm(request.POST)
-        if form.is_valid():
-            username    = form.cleaned_data['username']
-            email       = form.cleaned_data['email']
-            password    = form.cleaned_data['password']
-            user = User.objects.create_user(username=username,email=email,password=password,)
-            user.save()
-            return redirect('login')
+        try:
+            if form.is_valid():
+                username    = form.cleaned_data['username']
+                email       = form.cleaned_data['email']
+                password    = form.cleaned_data['password']
+                try:
+                    user = User.objects.create_user(username=username,email=email,password=password,)
+                    user.save()
+                except Exception as e:
+                    print(str(e))
+                return redirect('login')
+        except Exception as e:
+            print(str(e))
     else:
         form = SignupForm()
     context = {
@@ -69,7 +77,33 @@ def signup(request):
     return render(request, 'chartapp/signup.html',context)
 
 def login(request):
-    return render(request, 'chartapp/login.html' )
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+        print(email, password)
+        test = User.objects.filter(email=email).values('password','username')
+        print(test[0]['password'])
+        # test_user = authenticate(email=email, password=password)
+        test_user = check_password(password, test[0]['password'])
+        if test_user == True:
+            request.session['user'] = test[0]['username']
+            return redirect('indexpage')
+        else:
+            messages.error(request, 'Incorrect email or passwordd')
+            return render(request, 'chartapp/login.html')
+    else:
+        return render(request, 'chartapp/login.html' )
+
+
+def logout(request):
+    try:
+        request.session.flush()
+        del request.session['user']
+        return redirect('indexpage')    
+    except:
+        # raise        
+        return redirect('indexpage')
+
 
 
 # To save Json data into django model

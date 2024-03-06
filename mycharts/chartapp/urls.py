@@ -9,6 +9,8 @@ urlpatterns = [
      path('search/', views.search, name='search'),
      path('filter-page/', views.filter, name='filter-page'),
      path('add_data/', views.add_data, name='add_data'),
+     path('logout', views.logout, name='logout'),
+
 
 ]
  
