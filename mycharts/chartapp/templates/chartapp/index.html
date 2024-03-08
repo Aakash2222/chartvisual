@@ -4,26 +4,34 @@
 <div class="main-container">
 
 <div class='mini-bar'>
-  <h1>Django Chart Project</h1>
+  <h1>Django Chart-Visualization Project</h1>
+  {% if request.session.user %}
   <button class="btn btn-outline-success"><a href='{% url 'add_data' %}'>ADD New Data</a></button>
+  {% endif %} 
 </div>
-<hr>
-    
+
 <div class="row"> 
-  <div class="col-md-4">
+  <div class="col-md-2">
     <div class="card">
       <div class="card-body">
-        
-        <h5 class="card-title">Intensity vs. Sector Statistics</h5>
+        <div class="chart-container" id="leftbar">
+          <div><button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">Home</a></button></div>
+          <div><button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">Filter</a></button></div>
+          <div><button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">LogOut</a></button></div>
 
-        <div class="chart-container">
-          {% include 'partials/chart1.html' %}
+          <div>
+            {% if request.session.user %}
+            <button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">LogOut</a></button>
+            {% else %}
+            <button class="btn btn-outline-primary" type="submit"><a href="{% url 'login' %}">Login</a></button>
+            {% endif %}
+          </div>
+
         </div>
-        <p class="card-text">View your sales performance over time.</p>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-5">
     <div class="card">
       <div class="card-body">
 
@@ -36,7 +44,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-5">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">something Vs something Statistics</h5>
