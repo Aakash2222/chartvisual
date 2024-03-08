@@ -14,15 +14,16 @@
           </li>
         </ul>
         
-        <form action="{% url 'search' %}" method='GET' class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='keyword'>
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <div class='mini-bar'>
+          {% if request.session.user %}
+          <button class="btn btn-outline-success"><a href='{% url 'add_data' %}'>ADD New Data</a></button>
+          {% endif %} 
+        </div>
         <div>
           {% if request.session.user %}
           <button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">LogOut</a></button>
           {% else %}
-          <button class="btn btn-outline-primary" type="submit"><a href="{% url 'login' %}">Login as Admin</a></button>
+          <button class="btn btn-outline-primary" type="submit"><a href="{% url 'login' %}">Login</a></button>
           {% endif %}
         </div>
       </div>
