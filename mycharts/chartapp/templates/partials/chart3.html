@@ -8,7 +8,7 @@
   <script>
     const ctx3 = document.getElementById('myChart3');
     new Chart(ctx3, {
-      type: 'bar',
+      type: 'polarArea',
       data: {
         labels: [{% for prod in products %} '{{prod.topic}}',  {% endfor %}],
         datasets: [{

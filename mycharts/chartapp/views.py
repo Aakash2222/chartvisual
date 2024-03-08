@@ -53,7 +53,7 @@ def index(request):
 #     }
 #     return render(request, 'chartapp/index.html',context)
 
-def signup(request):
+def signup(request):    
     if request.method == "POST":
         form    = SignupForm(request.POST)
         try:
