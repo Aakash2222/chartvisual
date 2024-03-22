@@ -5,6 +5,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent" style="color:white;">
+
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
@@ -13,10 +14,24 @@
             <a class="nav-link" href="{% url 'filter-page'  %}">Filter-Page</a>
           </li>
         </ul>
+
+        {% if request.session.user %}
+        <div class="mini-bar" style="padding-right: 20px;">
+          <label>User:  {{request.session.user}}</label>
+        </div>
+        {% endif %}
+        
+
+
+
         
         <div class='mini-bar'>
           {% if request.session.user %}
           <button class="btn btn-outline-success"><a href='{% url 'add_data' %}'>ADD New Data</a></button>
+          {% else %}
+          <button class="btn btn-outline-success"><a href='{% url 'signup' %}'>Sign-Up</a></button>
+          
+          
           {% endif %} 
         </div>
         <div>

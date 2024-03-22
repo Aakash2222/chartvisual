@@ -11,10 +11,10 @@
       {% comment %} type: 'bar', {% endcomment %}
       type: 'radar',
       data: {
-        labels: [{% for prod in products %} '{{prod.topic}}',  {% endfor %}],
+        labels: [{% for prod in products %} '{{prod.sector}}',  {% endfor %}],
         datasets: [{
           label: '# of Products',
-          data: [{% for prod in products %} '{{prod.likelihood}}',  {% endfor %}],
+          data: [{% for prod in products %} '{{prod.intensity}}',  {% endfor %}],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)',
@@ -43,4 +43,3 @@
       }
     });
   </script>  
-  <p>BarChar: Topic-Likelihood : BarChart</p>

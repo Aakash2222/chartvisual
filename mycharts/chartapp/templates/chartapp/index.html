@@ -1,42 +1,62 @@
 {% extends "partials/base.html" %}
 {% block content %}
 
+<style>
+  #leftbar ul li a::after, a::before{
+    background: #37a588;
+  }
+  #leftbar ul li.active a{
+    background: #37a588;
+    color: white;
+  }
+  .main-container {
+    position: relative;
+    }
+
+</style>
+
 <div class="main-container">
 
 <div class="row"> 
-  <div class="col-md-2">
+  <div class="col-md-1">
     <div class="card">
       <div class="card-body">
         <div class="chart-container" id="leftbar">
-          <div><button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">Home</a></button></div>
-          <div><button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">Filter</a></button></div>
-          <div><button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">LogOut</a></button></div>
+          
+ 
+          <ul class="list-unstyled components">
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'filter-page' %}">Filter</a></li>
 
-          <div>
-            {% if request.session.user %}
-            <button class="btn btn-outline-primary" type="submit"><a href="{% url 'logout' %}">LogOut</a></button>
-            {% else %}
-            <button class="btn btn-outline-primary" type="submit"><a href="{% url 'login' %}">Login</a></button>
-            {% endif %}
-          </div>
+            <li>
+              {% if request.session.user %}
+                <a href="{% url 'logout' %}">Logout</a>
+              {% else %}
+              <a href="{% url 'logout' %}">Login</a>
+              {% endif %}
+            </li>
+            
+          </ul>
 
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-md-10">
+  <div class="col-md-11">
     <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-6" >
         <div class="card">
           <div class="card-body">
     
             <h5 class="card-title">Topic Vs Likelihood Statistics</h5>
             <div class="chart-container">
-              somethings
+              PolarArea
               {% include 'partials/chart1.html' %}
             </div>
+            {% comment %} code for pagination {% endcomment %}
+            
     
           </div>
         </div>
@@ -45,9 +65,9 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">something Vs something Statistics</h5>
+            <h5 class="card-title">Sector Vs Intensity</h5>
             <div class="chart-container">
-              somethings
+              Radar-Chart
               {% include 'partials/chart2.html' %}
             </div>
           </div>
@@ -63,9 +83,9 @@
         <div class="card">
           <div class="card-body">
     
-            <h5 class="card-title">Topic Vs Likelihood Statistics</h5>
+            <h5 class="card-title">Source Vs Relevance Statistics</h5>
             <div class="chart-container">
-              somethings
+              Doughnut-Chart
               {% comment %} {% include 'partials/chart1.html' %} {% endcomment %}
               {% include 'partials/chart3.html' %}
 
@@ -78,9 +98,9 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">something Vs something Statistics</h5>
+            <h5 class="card-title">Region Vs Impact Statistics</h5>
             <div class="chart-container">
-              somethings
+              Pie-Chart
               {% include 'partials/chart4.html' %}
             </div>
           </div>
@@ -91,7 +111,45 @@
   </div>
   
 </div>
+<div>
+  <nav class="mt-4" aria-label="Page navigation sample">
+    {% if products.has_other_pages %}
+    <ul class="pagination">
+      {% if products.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
+      {% else %}
+      <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+      {% endif %}
 
+      
+      <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+      <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+      <li class="page-item"><a class="page-link" href="?page=3">...</a></li>
+{% comment %}       
+      <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+      <li class="page-item"><a class="page-link" href="?page=4">4</a></li>
+         {% endcomment %}
+      
+      
+      
+      {% comment %} {% if products.number == i %}
+        {% for i in products.paginator.page_range %}
+          <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+        {% endif %}
+        {% endfor %}
+         {% endcomment %}
+      
+      {% if products.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
+      {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>              
+      {% endif %}
+    </ul>
+    {% endif %}
+  </nav>
+</div>
 </div>
 
  

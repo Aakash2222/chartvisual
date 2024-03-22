@@ -1,18 +1,19 @@
-{% comment %} <div>
+<div>
   <canvas id="myChart1"></canvas>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   const ctx1 = document.getElementById('myChart1');
   new Chart(ctx1, {
-    type: 'bar',
+    type: 'polarArea',
     data: {
-      labels: [{% for product in products %} '{{product.topic}}',  {% endfor %}],
+      labels: [{% for prod in products %} '{{prod.topic}}',  {% endfor %}],
       datasets: [{
         label: '# of Products',
-        data: [{% for product in products %} '{{product.likelihood}}',  {% endfor %}],
+        data: [{% for prod in products %} '{{prod.likelihood}}',  {% endfor %}],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 0.2)',  
           'rgba(255, 159, 64, 0.2)',
           'rgba(255, 205, 86, 0.2)',
           'rgba(75, 192, 192, 0.2)',
@@ -39,5 +40,4 @@
     }
   });
 </script>  
-<h3>BarChar: Topic-Likelihood : BarChart</h3>
-</div> {% endcomment %}
+

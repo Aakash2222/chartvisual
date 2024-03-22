@@ -13,7 +13,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages
-
+from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 
 # Create your views here.
 
@@ -23,7 +23,7 @@ def index(request):
     products = Product.objects.all()
 
     paginator = Paginator(products,8)
-    page = request.POST.get('page')
+    page = request.GET.get('page')
     paged_products = paginator.get_page(page)
 
     if request.method == 'POST':
@@ -190,6 +190,19 @@ def filter(request):
             products = Product.objects.filter(Q(end_year__contains=end_year) & Q(topic__contains=topic))
         elif end_year:
             products = Product.objects.filter(end_year__contains=end_year)
+        elif topic:
+            products = Product.objects.filter(topic__contains=topic)
+        elif sector:
+            products = Product.objects.filter(sector__contains=sector)
+        elif region:
+            products = Product.objects.filter(region__contains=region)
+        elif source:
+            products = Product.objects.filter(source__contains=source)
+        elif country:
+            products = Product.objects.filter(country__contains=country)
+        
+
+        
     context ={
         'products': products,
     }
@@ -207,4 +220,8 @@ def add_data(request):
         'form':form,
     }
     return render(request, 'chartapp/add_data.html',content)
-    
+
+def delete_product(request,pk):
+    print('delete funtion')
+    Product.objects.filter(id=pk).delete()
+    return redirect('filter-page')

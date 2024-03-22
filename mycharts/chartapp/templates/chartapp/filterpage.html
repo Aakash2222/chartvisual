@@ -48,17 +48,29 @@
             <th scope="col">Region</th>
             <th scope="col">Source</th>
             <th scope="col">Country</th>
+
+            {% if request.session.user %}
+              <th scope="col"><b>Action</th>
+            {% endif %}
+
           </tr>
         </thead>
         <tbody>
         {% for prod in products %}
           <tr>
+
             <td>{{prod.end_year}}</td>
             <td>{{prod.topic}}</td>
             <td>{{prod.sector}}</td>
             <td>{{prod.region}}</td>
             <td>{{prod.source}}</td>
             <td>{{prod.country}}</td>
+            {% if request.session.user %}
+              <td>
+                <a href="{% url 'delete_product' prod.id %}" type="button" class="btn btn-danger">DELETE</a>
+              </td>
+            {% endif %}
+                      
           </tr>
         {% endfor %}
         </tbody>

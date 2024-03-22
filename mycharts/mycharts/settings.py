@@ -1,4 +1,9 @@
 from pathlib import Path
+from urllib.parse import quote_plus
+from mongoengine import connect
+import mongoengine
+import pymongo
+import djongo
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,8 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chartapp',
-    # 'django-filters',
-
+    
 ]
 
 # APPEND_SLASH=False
@@ -62,12 +66,31 @@ WSGI_APPLICATION = 'mycharts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'MyMongoDB', 
+#         # name is database name inside mondodb
+#         'ENFORCE_SCHEMA': False,
+#         'CLIENT':{
+#             'host':'mongodb+srv://aakashsinghas140:Ilovesupriya12@cluster0.hbalffn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+#         }
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Mysqlproject',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306',  # Default MySQL port
     }
 }
+
+
 
 
 # Password validation
