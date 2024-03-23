@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chartapp',
+    'crispy_forms',
+    'crispy_bootstrap4',
     
 ]
 
@@ -62,6 +64,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mycharts.wsgi.application'
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

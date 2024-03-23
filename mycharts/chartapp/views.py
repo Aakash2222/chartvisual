@@ -22,7 +22,7 @@ from django.http import JsonResponse
 def index(request):
     products = Product.objects.all()
 
-    paginator = Paginator(products,8)
+    paginator = Paginator(products,12)
     page = request.GET.get('page')
     paged_products = paginator.get_page(page)
 
@@ -225,3 +225,6 @@ def delete_product(request,pk):
     print('delete funtion')
     Product.objects.filter(id=pk).delete()
     return redirect('filter-page')
+
+def about_us(request):
+    return render(request, 'chartapp/about_us.html')

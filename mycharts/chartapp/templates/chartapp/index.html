@@ -1,7 +1,7 @@
 {% extends "partials/base.html" %}
 {% block content %}
 
-<style>
+{% comment %} <style>
   #leftbar ul li a::after, a::before{
     background: #37a588;
   }
@@ -55,7 +55,6 @@
               PolarArea
               {% include 'partials/chart1.html' %}
             </div>
-            {% comment %} code for pagination {% endcomment %}
             
     
           </div>
@@ -75,7 +74,6 @@
       </div>
 
     </div>
-    {% comment %} ..................... {% endcomment %}
     <br>
     <div class="row">
 
@@ -86,7 +84,6 @@
             <h5 class="card-title">Source Vs Relevance Statistics</h5>
             <div class="chart-container">
               Doughnut-Chart
-              {% comment %} {% include 'partials/chart1.html' %} {% endcomment %}
               {% include 'partials/chart3.html' %}
 
             </div>
@@ -111,47 +108,198 @@
   </div>
   
 </div>
-<div>
-  <nav class="mt-4" aria-label="Page navigation sample">
-    {% if products.has_other_pages %}
-    <ul class="pagination">
-      {% if products.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
-      {% else %}
-      <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-      {% endif %}
 
-      
-      <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
-      <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
-      <li class="page-item"><a class="page-link" href="?page=3">...</a></li>
-{% comment %}       
-      <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
-      <li class="page-item"><a class="page-link" href="?page=4">4</a></li>
-         {% endcomment %}
-      
-      
-      
-      {% comment %} {% if products.number == i %}
-        {% for i in products.paginator.page_range %}
-          <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
-        {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
-        {% endif %}
-        {% endfor %}
-         {% endcomment %}
-      
-      {% if products.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
-      {% else %}
-        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>              
-      {% endif %}
-    </ul>
+</div>
+ {% endcomment %}
+
+
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Lato", sans-serif;
+  }
+  
+  .sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+  }
+  
+  .sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+   
+  .sidebar a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+  
+  .sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+  
+  div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+    
+  }
+  
+  @media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+  }
+  
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+  </style>
+  
+  
+  <div class="sidebar">
+    <a class="active" href="#">Home</a>
+    <a href="{% url 'filter-page'  %}">Filter-Page</a>
+
+    {% if request.session.user %}
+    <a href="{% url 'add_data' %}">ADD New Data</a>
     {% endif %}
-  </nav>
-</div>
-</div>
 
- 
+    <a href="{% url 'about-us' %}">About Us</a>
+
+    {% if request.session.user %}
+      <a href="{% url 'logout' %}">LogOut</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+
+  </div>
+  
+  <div class="content">
+    <div class="col-md-11">
+      <div class="row">
+  
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+      
+              <h5 class="card-title">Topic Vs Likelihood Statistics</h5>
+              <div class="chart-container">
+                somethings
+                {% include 'partials/chart1.html' %}
+              </div>
+      
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">something Vs something Statistics</h5>
+              <div class="chart-container">
+                somethings
+                {% include 'partials/chart2.html' %}
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      {% comment %} ..................... {% endcomment %}
+      <br>
+      <div class="row">
+  
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+      
+              <h5 class="card-title">Topic Vs Likelihood Statistics</h5>
+              <div class="chart-container">
+                somethings
+                {% comment %} {% include 'partials/chart1.html' %} {% endcomment %}
+                {% include 'partials/chart3.html' %}
+  
+              </div>
+      
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Region Vs Impact Statistics</h5>
+              <div class="chart-container">
+                somethings
+                {% include 'partials/chart4.html' %}
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+    <div>
+      <nav class="mt-4" aria-label="Page navigation sample">
+        {% if products.has_other_pages %}
+        <ul class="pagination">
+          {% if products.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+          {% endif %}
+    
+          
+          <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+          <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+          <li class="page-item"><a class="page-link" href="?page=3">...</a></li>
+    {% comment %}       
+          <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+          <li class="page-item"><a class="page-link" href="?page=4">4</a></li>
+             {% endcomment %}
+          
+          
+          
+          {% comment %} {% if products.number == i %}
+            {% for i in products.paginator.page_range %}
+              <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+             {% endcomment %}
+          
+          {% if products.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
+          {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>              
+          {% endif %}
+        </ul>
+        {% endif %}
+      </nav>
+    </div>
+  </div>
+
+
+
+
+
 {% endblock %}
 
